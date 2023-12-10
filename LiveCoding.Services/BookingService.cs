@@ -5,15 +5,23 @@ namespace LiveCoding.Services
     public class Bar
     {
         public int _capacity { get; }
+        public DayOfWeek[] _open { get; }
 
-        public Bar(int capacity)
+
+        public Bar(int capacity, DayOfWeek[] open)
         {
             _capacity = capacity;
+            _open = open;
         }
 
         public bool HasEnoughCapacity(int maxNumberOfDevs)
         {
             return _capacity >= maxNumberOfDevs;
+        }
+
+        public bool IsOpen(DateTime bestDate)
+        {
+            return _open.Contains(bestDate.DayOfWeek);
         }
     }
 
@@ -69,7 +77,7 @@ namespace LiveCoding.Services
 
             foreach (var boatData in boats)
             {
-                var bar = new Bar(boatData.MaxPeople);
+                var bar = new Bar(boatData.MaxPeople, Enum.GetValues<DayOfWeek>());
                 if (bar.HasEnoughCapacity(maxNumberOfDevs))
                 {
                     BookBar(boatData.Name, bestDate);
@@ -80,8 +88,8 @@ namespace LiveCoding.Services
 
             foreach (var barData in bars)
             {
-                var bar = new Bar(barData.Capacity);
-                if (bar.HasEnoughCapacity(maxNumberOfDevs) && barData.Open.Contains(bestDate.DayOfWeek))
+                var bar = new Bar(barData.Capacity, barData.Open);
+                if (bar.HasEnoughCapacity(maxNumberOfDevs) && bar.IsOpen(bestDate))
                 {
                     BookBar(barData.Name, bestDate);
                     _bookingRepository.Save(new BookingData() { Bar = barData, Date = bestDate });
