@@ -78,23 +78,19 @@ namespace LiveCoding.Services
             foreach (var boatData in boats)
             {
                 var bar = new Bar(boatData.MaxPeople, Enum.GetValues<DayOfWeek>());
-                if (bar.HasEnoughCapacity(maxNumberOfDevs))
-                {
-                    BookBar(boatData.Name, bestDate);
-                    _bookingRepository.Save(new BookingData() { Bar = new BarData(boatData.Name, boatData.MaxPeople, Enum.GetValues<DayOfWeek>() ), Date = bestDate });
-                    return true;
-                }
+                if (!bar.HasEnoughCapacity(maxNumberOfDevs)) continue;
+                BookBar(boatData.Name, bestDate);
+                _bookingRepository.Save(new BookingData() { Bar = new BarData(boatData.Name, boatData.MaxPeople, Enum.GetValues<DayOfWeek>() ), Date = bestDate });
+                return true;
             }
 
             foreach (var barData in bars)
             {
                 var bar = new Bar(barData.Capacity, barData.Open);
-                if (bar.HasEnoughCapacity(maxNumberOfDevs) && bar.IsOpen(bestDate))
-                {
-                    BookBar(barData.Name, bestDate);
-                    _bookingRepository.Save(new BookingData() { Bar = barData, Date = bestDate });
-                    return true;
-                }
+                if (!bar.HasEnoughCapacity(maxNumberOfDevs) || !bar.IsOpen(bestDate)) continue;
+                BookBar(barData.Name, bestDate);
+                _bookingRepository.Save(new BookingData() { Bar = barData, Date = bestDate });
+                return true;
             }
 
             return false;
