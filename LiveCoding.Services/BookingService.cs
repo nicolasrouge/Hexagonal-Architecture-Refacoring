@@ -25,6 +25,7 @@ namespace LiveCoding.Services
         {
             var bars = _barRepo.Get();
             var devs = _devRepo.Get().ToList();
+            var boats = _boatRepo.Get();
 
             var numberOfAvailableDevsByDate = new Dictionary<DateTime, int>();
             foreach (var devData in devs)
@@ -50,6 +51,16 @@ namespace LiveCoding.Services
             }
 
             var bestDate = numberOfAvailableDevsByDate.First(kv => kv.Value == maxNumberOfDevs).Key;
+
+            foreach (var boatData in boats)
+            {
+                if (boatData.MaxPeople >= maxNumberOfDevs)
+                {
+                    BookBar(boatData.Name, bestDate);
+                    _bookingRepository.Save(new BookingData() { Bar = new BarData(boatData.Name, boatData.MaxPeople, Enum.GetValues<DayOfWeek>() ), Date = bestDate });
+                    return true;
+                }
+            }
 
             foreach (var barData in bars)
             {
