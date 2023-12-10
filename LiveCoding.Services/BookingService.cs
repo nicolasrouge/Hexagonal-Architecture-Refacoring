@@ -54,7 +54,7 @@ namespace LiveCoding.Services
 
             foreach (var boatData in boats)
             {
-                if (boatData.MaxPeople >= maxNumberOfDevs)
+                if (HasEnoughCapacity(boatData, maxNumberOfDevs))
                 {
                     BookBar(boatData.Name, bestDate);
                     _bookingRepository.Save(new BookingData() { Bar = new BarData(boatData.Name, boatData.MaxPeople, Enum.GetValues<DayOfWeek>() ), Date = bestDate });
@@ -73,6 +73,11 @@ namespace LiveCoding.Services
             }
 
             return false;
+        }
+
+        private static bool HasEnoughCapacity(BoatData boatData, int maxNumberOfDevs)
+        {
+            return boatData.MaxPeople >= maxNumberOfDevs;
         }
 
         private void BookBar(string name, DateTime dateTime)
