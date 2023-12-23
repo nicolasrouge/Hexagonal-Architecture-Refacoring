@@ -4,11 +4,6 @@ Hello there! I'm undertaking an exciting exercise: refactoring the project origi
 <https://youtu.be/G8ItpRMBcH0> This project, originally designed at Agicap, showcases an approach to Domain-Driven Design (DDD) with a particular focus on hexagonal architecture.
 
 Really good exercises. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
-
-# Concepts 
-- Move and Extract
-- DDD
-- Hexagonal
   
 # Original Description
 
