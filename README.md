@@ -10,7 +10,7 @@ Really good exercises. Thanks to Pauline Jamin, Caroline Desplanques & Artisan D
 - Move and Extract
 - DDD
 - Hexagonal
-- 
+  
 # Original Description
 
 We are Pauline Jamin and Caroline Desplanques, working on a live coding in partnership with Artisan Developpeur.
