@@ -4,25 +4,25 @@ namespace LiveCoding.Services
 {
     public class Bar
     {
-        public int _capacity { get; }
-        public DayOfWeek[] _open { get; }
+        private string Name { get; }
+        private int Capacity { get; }
+        private DayOfWeek[] Open { get; }
 
-
-        public Bar(int capacity, DayOfWeek[] open)
+        public Bar(int capacity, DayOfWeek[] open, string name)
         {
-            _capacity = capacity;
-            _open = open;
+            Name = name;
+            Capacity = capacity;
+            Open = open;
         }
 
-        public bool HasEnoughCapacity(int maxNumberOfDevs)
-        {
-            return _capacity >= maxNumberOfDevs;
-        }
+        public bool IsBookable(int maxNumberOfDevs, DateTime bestDate) => 
+            HasEnoughCapacity(maxNumberOfDevs) && IsOpen(bestDate);
 
-        public bool IsOpen(DateTime bestDate)
-        {
-            return _open.Contains(bestDate.DayOfWeek);
-        }
+        public bool HasEnoughCapacity(int maxNumberOfDevs) => Capacity >= maxNumberOfDevs;
+
+        public bool IsOpen(DateTime bestDate) => Open.Contains(bestDate.DayOfWeek);
+
+        public void BookBar(DateTime dateTime) => Console.WriteLine("Bar booked: " + Name + " at " + dateTime);
     }
 
     public class BookingService
@@ -77,28 +77,23 @@ namespace LiveCoding.Services
 
             foreach (var boatData in boats)
             {
-                var bar = new Bar(boatData.MaxPeople, Enum.GetValues<DayOfWeek>());
-                if (!bar.HasEnoughCapacity(maxNumberOfDevs)) continue;
-                BookBar(boatData.Name, bestDate);
+                var bar = new Bar(boatData.MaxPeople, Enum.GetValues<DayOfWeek>(), boatData.Name);
+                if (!bar.IsBookable(maxNumberOfDevs, bestDate)) continue;
+                bar.BookBar(bestDate);
                 _bookingRepository.Save(new BookingData() { Bar = new BarData(boatData.Name, boatData.MaxPeople, Enum.GetValues<DayOfWeek>() ), Date = bestDate });
                 return true;
             }
 
             foreach (var barData in bars)
             {
-                var bar = new Bar(barData.Capacity, barData.Open);
-                if (!bar.HasEnoughCapacity(maxNumberOfDevs) || !bar.IsOpen(bestDate)) continue;
-                BookBar(barData.Name, bestDate);
+                var bar = new Bar(barData.Capacity, barData.Open, barData.Name);
+                if (!bar.IsBookable(maxNumberOfDevs, bestDate)) continue;
+                bar.BookBar(bestDate);
                 _bookingRepository.Save(new BookingData() { Bar = barData, Date = bestDate });
                 return true;
             }
 
             return false;
-        }
-
-        private void BookBar(string name, DateTime dateTime)
-        {
-            Console.WriteLine("Bar booked: " + name + " at " + dateTime);
         }
     }
 }
