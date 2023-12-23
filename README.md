@@ -1,4 +1,18 @@
-# Welcome to the support for our live coding!
+# Hexagonal Architecture Refactoring
+
+Hello there! I'm undertaking an exciting exercise: refactoring the live coding project originally developed by Pauline Jamin and Caroline Desplanques, in partnership with Artisan Developpeur.
+<https://youtu.be/G8ItpRMBcH0> This project, originally designed at Agicap, showcases a unique approach to Domain-Driven Design (DDD) and pairing programming, with a particular focus on hexagonal architecture.
+
+Really good exercises. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
+
+# Concepts 
+3-tier to Exagonal
+Move and Extract
+DDD
+Dictionaire to List
+Create value Objects
+
+# Original Description
 
 We are Pauline Jamin and Caroline Desplanques, working on a live coding in partnership with Artisan Developpeur.
 
