@@ -2,9 +2,9 @@
 
 public class Bar
 {
-    private BarName Name { get; }
-    private int Capacity { get; }
-    private DayOfWeek[] Open { get; }
+    public BarName Name { get; }
+    public int Capacity { get; }
+    public DayOfWeek[] Open { get; }
 
     public Bar(int capacity, DayOfWeek[] open, string name)
     {

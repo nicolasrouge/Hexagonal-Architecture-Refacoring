@@ -1,20 +1,7 @@
-﻿using System.Net.NetworkInformation;
-using LiveCoding.Persistence;
+﻿using LiveCoding.Persistence;
 
 namespace LiveCoding.Services
 {
-    public class DevAvailability
-    {
-        public int NumberOfDevs { get; set; }
-        public DateTime Day { get; }
-
-        public DevAvailability(DateTime day, int numberOfDevs)
-        {
-            NumberOfDevs = numberOfDevs;
-            Day = day;
-        }
-    }
-
     public class BookingService
     {
         private readonly IBarRepository _barRepo;
@@ -40,31 +27,31 @@ namespace LiveCoding.Services
             var devs = _devRepo.Get().ToList();
             var boats = _boatRepo.Get();
 
+            var allBars = GetAllBars(bars, boats);
+
             var devAvailabilities = GetDevAvailabilities(devs);
 
             var bestDate = BestDate.GetBestDate(devAvailabilities, devs.Count);
 
             if (bestDate is null) return false;
 
-            foreach (var boatData in boats)
+            foreach (var bar in allBars)
             {
-                var bar = new Bar(boatData.MaxPeople, Enum.GetValues<DayOfWeek>(), boatData.Name);
                 if (!bar.IsBookable(bestDate.NumberOfDevs, bestDate.Day)) continue;
                 bar.BookBar(bestDate.Day);
-                _bookingRepository.Save(new BookingData() { Bar = new BarData(boatData.Name, boatData.MaxPeople, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
-                return true;
-            }
-
-            foreach (var barData in bars)
-            {
-                var bar = new Bar(barData.Capacity, barData.Open, barData.Name);
-                if (!bar.IsBookable(bestDate.NumberOfDevs, bestDate.Day)) continue;
-                bar.BookBar(bestDate.Day);
-                _bookingRepository.Save(new BookingData() { Bar = barData, Date = bestDate.Day });
+                _bookingRepository.Save(new BookingData() { Bar = new BarData(bar.Name.Value, bar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
                 return true;
             }
 
             return false;
+        }
+
+        private static IEnumerable<Bar> GetAllBars(IEnumerable<BarData> bars, IEnumerable<BoatData> boats)
+        {
+            var allBars = new List<Bar>();
+            allBars = bars.Select(bar => new Bar(bar.Capacity, bar.Open, bar.Name)).ToList();
+            allBars.AddRange(boats.Select(boat => new Bar(boat.MaxPeople, Enum.GetValues<DayOfWeek>(), boat.Name)));
+            return allBars;
         }
 
         private static List<DevAvailability> GetDevAvailabilities(IEnumerable<DevData> devs)
