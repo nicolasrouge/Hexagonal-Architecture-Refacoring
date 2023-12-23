@@ -2,6 +2,17 @@
 
 namespace LiveCoding.Services
 {
+    public class DevAvailability
+    {
+        public int NumberOfDevs { get; set; }
+        public DateTime Day { get; }
+
+        public DevAvailability(DateTime day, int numberOfDevs)
+        {
+            NumberOfDevs = numberOfDevs;
+            Day = day;
+        }
+    }
     public class BookingService
     {
         private readonly IBarRepository _barRepo;
@@ -27,30 +38,30 @@ namespace LiveCoding.Services
             var devs = _devRepo.Get().ToList();
             var boats = _boatRepo.Get();
 
-            var numberOfAvailableDevsByDate = new Dictionary<DateTime, int>();
-            foreach (var devData in devs)
+            var devAvailabilities = new List<DevAvailability>();
+
+            foreach (var date in devs.SelectMany(devData => devData.OnSite))
             {
-                foreach (var date in devData.OnSite)
+                var devAvailability = devAvailabilities.FirstOrDefault(devAvailability => devAvailability.Day == date);
+                if (devAvailability != null)
                 {
-                    if (numberOfAvailableDevsByDate.ContainsKey(date))
-                    {
-                        numberOfAvailableDevsByDate[date]++;
-                    }
-                    else
-                    {
-                        numberOfAvailableDevsByDate.Add(date, 1);
-                    }
+                    devAvailability.NumberOfDevs++;
+                }
+                else
+                {
+                    devAvailabilities.Add(new DevAvailability(date, 1));
                 }
             }
 
-            var maxNumberOfDevs = numberOfAvailableDevsByDate.Values.Max();
+            var maxNumberOfDevs = devAvailabilities.Max(devAvailability => devAvailability.NumberOfDevs);
 
             if (maxNumberOfDevs <= devs.Count() * 0.6)
             {
                 return false;
             }
 
-            var bestDate = numberOfAvailableDevsByDate.First(kv => kv.Value == maxNumberOfDevs).Key;
+            var bestDate = devAvailabilities.Find(devA => devA.NumberOfDevs == maxNumberOfDevs).Day;
+            //TODO: handle not found
 
             foreach (var boatData in boats)
             {
@@ -72,5 +83,6 @@ namespace LiveCoding.Services
 
             return false;
         }
+
     }
 }
