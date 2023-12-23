@@ -2,18 +2,18 @@
 
 public class Bar
 {
-    private string Name { get; }
+    private BarName Name { get; }
     private int Capacity { get; }
     private DayOfWeek[] Open { get; }
 
     public Bar(int capacity, DayOfWeek[] open, string name)
     {
-        Name = name;
+        Name = new BarName(name);
         Capacity = capacity;
         Open = open;
     }
 
-    public bool IsBookable(int maxNumberOfDevs, DateTime bestDate) => 
+    public bool IsBookable(int maxNumberOfDevs, DateTime bestDate) =>
         HasEnoughCapacity(maxNumberOfDevs) && IsOpen(bestDate);
 
     public bool HasEnoughCapacity(int maxNumberOfDevs) => Capacity >= maxNumberOfDevs;
