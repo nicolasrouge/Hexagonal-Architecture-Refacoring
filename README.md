@@ -6,7 +6,6 @@ Hello there! I'm undertaking an exciting exercise: refactoring the project origi
 Really good exercises. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
 
 # Concepts 
-- 3-tier to Exagonal
 - Move and Extract
 - DDD
 - Hexagonal
