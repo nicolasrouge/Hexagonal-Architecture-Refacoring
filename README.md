@@ -4,8 +4,21 @@ Hello there! I'm undertaking an exciting exercise: refactoring the project origi
 <https://youtu.be/G8ItpRMBcH0> This project, originally designed at Agicap, showcases an approach to Domain-Driven Design (DDD) with a particular focus on hexagonal architecture.
 
 Really good exercises. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
-  
-# Original Description
+
+# Notes about the refactoring
+## Architecture Overview: 3-Tier to Hexagonal Transition 
+### Original Structure: 3-Tier
+- **Direct Interaction:** `BookingService` directly calls the repository.
+- **Tightly Coupled:** Business logic closely tied to data access.
+### Refactored: Ports and Adapters (Hexagonal)
+- **Ports (Interfaces):** `IProvideBar` in the domain for abstraction.
+- **Adapters:** 'Bar Adapter and Repos' implement these interfaces, connecting to the domain.
+- **Inverted Dependencies:** External components reference the domain, not the other way around.
+- **Benefits:** Decoupled design, enhanced flexibility, and improved testability.
+
+This transition shifts our architecture towards better modularity, aligning with Domain-Driven Design principles.
+
+# Description
 
 We are Pauline Jamin and Caroline Desplanques, working on a live coding in partnership with Artisan Developpeur.
 
