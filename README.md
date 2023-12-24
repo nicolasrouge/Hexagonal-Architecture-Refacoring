@@ -1,6 +1,6 @@
 # Hexagonal Architecture Refactoring
 
-➡️ Hello there! I'm undertaking an exciting exercise: refactoring the project originally developed by Pauline and Caroline from Agicap, in partnership with Artisan Developpeur <https://youtu.be/G8ItpRMBcH0>. The project showcases an approach to Domain-Driven Design (DDD) with a particular focus on *hexagonal architecture*.
+➡️ Hello there! I'm undertaking an exciting exercise: refactoring the project originally developed by Pauline and Caroline from Agicap, in partnership with Artisan Developpeur <[youtube video](https://youtu.be/G8ItpRMBcH0?t=2337)>. The project showcases an approach to Domain-Driven Design (DDD) with a particular focus on *hexagonal architecture*.
 
 Really good exercise. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
 
