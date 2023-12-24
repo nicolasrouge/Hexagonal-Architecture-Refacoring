@@ -17,11 +17,7 @@ Really good exercise. Thanks to Pauline Jamin, Caroline Desplanques & Artisan De
 
 This transition shifts our architecture towards better modularity, aligning with Domain-Driven Design principles.
 
-# Description
-
-We are Pauline Jamin and Caroline Desplanques, working on a live coding in partnership with Artisan Developpeur.
-
-Our goal is to share some insights on how we work currently at Agicap, being in the pairing flow, in our DDD mindset, and maybe show a little bit of an architecture we are fond of: hexagonal architecture.
+# Description (see the forked project)
 
 The idea of this project is : we are many devs all around Europe and when devs are coming to Lyon, we like to celebrate and go to a bar. 
 So we did a fictionnal little API to find the best date and bar to gather developers. The project was done a long time ago in n-tier architecture and did not evolve since.
