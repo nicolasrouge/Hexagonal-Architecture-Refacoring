@@ -1,19 +1,18 @@
 # Hexagonal Architecture Refactoring
 
-Hello there! I'm undertaking an exciting exercise: refactoring the project originally developed by Pauline Jamin and Caroline Desplanques, in partnership with Artisan Developpeur.
-<https://youtu.be/G8ItpRMBcH0> This project, originally designed at Agicap, showcases an approach to Domain-Driven Design (DDD) with a particular focus on hexagonal architecture.
+➡️ Hello there! I'm undertaking an exciting exercise: refactoring the project originally developed by Pauline and Caroline from Agicap, in partnership with Artisan Developpeur <https://youtu.be/G8ItpRMBcH0>. The project showcases an approach to Domain-Driven Design (DDD) with a particular focus on *hexagonal architecture*.
 
 Really good exercise. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
 
-# Notes about the refactoring
+# My Notes about the refactoring 📝
 ## Architecture Overview: 3-Tier to Hexagonal Transition 
 ### Original Structure: 3-Tier
-- **Direct Interaction:** `BookingService` directly calls the repository.
-- **Tightly Coupled:** Business logic closely tied to data access.
+- **Direct Interaction:** `BookingService` directly calls the repository. 
+- **Tightly Coupled:** Business logic closely tied to data access. 
 ### Refactored: Ports and Adapters (Hexagonal)
-- **Ports (Interfaces):** `IProvideBar` in the domain for abstraction.
-- **Adapters:** 'Bar Adapter and Repos' implement these interfaces, connecting to the domain.
-- **Inverted Dependencies:** External components reference the domain, not the other way around.
+- **Ports (Interfaces):** `IProvideBar` in the domain for abstraction. 
+- **Adapters:** 'Bar Adapter and Repos' implement these interfaces, connecting to the domain. 
+- **Inverted Dependencies:** External components reference the domain, not the other way around. 
 - **Benefits:** Decoupled design, enhanced flexibility, and improved testability.
 
 This transition shifts our architecture towards better modularity, aligning with Domain-Driven Design principles.
