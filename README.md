@@ -3,7 +3,7 @@
 Hello there! I'm undertaking an exciting exercise: refactoring the project originally developed by Pauline Jamin and Caroline Desplanques, in partnership with Artisan Developpeur.
 <https://youtu.be/G8ItpRMBcH0> This project, originally designed at Agicap, showcases an approach to Domain-Driven Design (DDD) with a particular focus on hexagonal architecture.
 
-Really good exercises. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
+Really good exercise. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
 
 # Notes about the refactoring
 ## Architecture Overview: 3-Tier to Hexagonal Transition 
