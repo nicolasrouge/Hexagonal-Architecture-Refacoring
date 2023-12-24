@@ -1,8 +1,23 @@
-# Welcome to the support for our live coding!
+# Hexagonal Architecture Refactoring
 
-We are Pauline Jamin and Caroline Desplanques, working on a live coding in partnership with Artisan Developpeur.
+➡️ Hello there! I'm undertaking an exciting exercise: refactoring the project originally developed by Pauline and Caroline from Agicap, in partnership with Artisan Developpeur <https://youtu.be/G8ItpRMBcH0>. The project showcases an approach to Domain-Driven Design (DDD) with a particular focus on *hexagonal architecture*.
 
-Our goal is to share some insights on how we work currently at Agicap, being in the pairing flow, in our DDD mindset, and maybe show a little bit of an architecture we are fond of: hexagonal architecture.
+Really good exercise. Thanks to Pauline Jamin, Caroline Desplanques & Artisan Developpeur.
+
+# My Notes about the refactoring 📝
+## Architecture Overview: 3-Tier to Hexagonal Transition 
+### Original Structure: 3-Tier
+- **Direct Interaction:** `BookingService` directly calls the repository. 
+- **Tightly Coupled:** Business logic closely tied to data access. 
+### Refactored: Ports and Adapters (Hexagonal)
+- **Ports (Interfaces):** `IProvideBar` in the domain for abstraction. 
+- **Adapters:** 'Bar Adapter and Repos' implement these interfaces, connecting to the domain. 
+- **Inverted Dependencies:** External components reference the domain, not the other way around. 
+- **Benefits:** Decoupled design, enhanced flexibility, and improved testability.
+
+This transition shifts our architecture towards better modularity, aligning with Domain-Driven Design principles.
+
+# Description (see the forked project)
 
 The idea of this project is : we are many devs all around Europe and when devs are coming to Lyon, we like to celebrate and go to a bar. 
 So we did a fictionnal little API to find the best date and bar to gather developers. The project was done a long time ago in n-tier architecture and did not evolve since.
