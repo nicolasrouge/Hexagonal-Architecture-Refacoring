@@ -28,29 +28,23 @@ namespace LiveCoding.Services
             var boats = _boatRepo.Get();
 
             var allBars = GetAllBars(bars, boats);
-
             var devAvailabilities = GetDevAvailabilities(devs);
-
             var bestDate = BestDate.GetBestDate(devAvailabilities, devs.Count);
 
             if (bestDate is null) return false;
 
-            foreach (var bar in allBars)
-            {
-                if (!bar.IsBookable(bestDate.NumberOfDevs, bestDate.Day)) continue;
-                bar.BookBar(bestDate.Day);
-                _bookingRepository.Save(new BookingData() { Bar = new BarData(bar.Name.Value, bar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
-                return true;
-            }
+            var bookedBar = Booking.Book(allBars.ToList(), bestDate);
+            if (bookedBar is null) return false;
+            _bookingRepository.Save(new BookingData() { Bar = new BarData(bookedBar.Name.Value, bookedBar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
+            
+            return true;
 
-            return false;
         }
 
-        private static IEnumerable<Bar> GetAllBars(IEnumerable<BarData> bars, IEnumerable<BoatData> boats)
+        private static IEnumerable<Bar?> GetAllBars(IEnumerable<BarData> bars, IEnumerable<BoatData> boats)
         {
-            var allBars = new List<Bar>();
-            allBars = bars.Select(bar => new Bar(bar.Capacity, bar.Open, bar.Name)).ToList();
-            allBars.AddRange(boats.Select(boat => new Bar(boat.MaxPeople, Enum.GetValues<DayOfWeek>(), boat.Name)));
+            var allBars = bars.Select(bar => new Bar(bar.Capacity, bar.Open, bar.Name, true)).ToList();
+            allBars.AddRange(boats.Select(boat => new Bar(boat.MaxPeople, Enum.GetValues<DayOfWeek>(), boat.Name, false)));
             return allBars;
         }
 
@@ -63,7 +57,6 @@ namespace LiveCoding.Services
                 if (devAvailability != null) devAvailability.NumberOfDevs++;
                 else devAvailabilities.Add(new DevAvailability(date, 1));
             }
-
             return devAvailabilities;
         }
     }
