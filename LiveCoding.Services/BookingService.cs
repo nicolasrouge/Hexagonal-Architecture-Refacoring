@@ -1,4 +1,5 @@
-﻿using LiveCoding.Persistence;
+﻿using LiveCoding.Domain;
+using LiveCoding.Persistence;
 
 namespace LiveCoding.Services
 {

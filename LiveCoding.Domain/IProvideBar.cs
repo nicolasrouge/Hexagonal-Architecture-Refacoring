@@ -1,4 +1,4 @@
-﻿namespace LiveCoding.Services;
+﻿namespace LiveCoding.Domain;
 
 public interface IProvideBar
 {
