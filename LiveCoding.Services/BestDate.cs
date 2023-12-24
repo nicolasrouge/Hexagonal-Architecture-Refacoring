@@ -9,16 +9,12 @@ public static class BestDate
         var maxNumberOfDevs = GetMaxNumberOfDevs(devAvailabilities);
 
         var devAvailability = devAvailabilities.Find(devA => devA.NumberOfDevs == maxNumberOfDevs);
-        //TODO: handle not found
 
-        if (MinimumNumberOfDevsNotAvailable(maxNumberOfDevs, totalNUmberOfDevs))
+        if (devAvailability is null || MinimumNumberOfDevsNotAvailable(maxNumberOfDevs, totalNUmberOfDevs))
         {
-            return null;
+            return new DevAvailabilityNotFound();
         }
-        else
-        {
-            return devAvailability; ;
-        }
+        return devAvailability; ;
     }
 
     private static bool MinimumNumberOfDevsNotAvailable(int maxNumberOfDevs, int totalNumberOfDevs)

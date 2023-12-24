@@ -31,14 +31,14 @@ namespace LiveCoding.Services
             var devAvailabilities = GetDevAvailabilities(devs);
             var bestDate = BestDate.GetBestDate(devAvailabilities, devs.Count);
 
-            if (bestDate is null) return false;
+            if (bestDate is DevAvailabilityNotFound) return false;
 
             var bookedBar = Booking.Book(allBars.ToList(), bestDate);
-            if (bookedBar is null) return false;
-            _bookingRepository.Save(new BookingData() { Bar = new BarData(bookedBar.Name.Value, bookedBar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
-            
-            return true;
+            if (bookedBar is BarNotFound) return false;
 
+            _bookingRepository.Save(new BookingData() { Bar = new BarData(bookedBar.Name.Value, bookedBar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
+
+            return true;
         }
 
         private static IEnumerable<Bar?> GetAllBars(IEnumerable<BarData> bars, IEnumerable<BoatData> boats)
