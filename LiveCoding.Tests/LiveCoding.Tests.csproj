@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LiveCoding.Api\LiveCoding.Api.csproj" />
+    <ProjectReference Include="..\LiveCoding.Infra\LiveCoding.Infra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveCoding.Persistence", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveCoding.Domain", "LiveCoding.Domain\LiveCoding.Domain.csproj", "{7632068F-8443-447E-9D38-4A102685518F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveCoding.Infra", "LiveCoding.Infra\LiveCoding.Infra.csproj", "{BCFB53E0-FE4D-43C8-A732-E95C280C6B0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{7632068F-8443-447E-9D38-4A102685518F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7632068F-8443-447E-9D38-4A102685518F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7632068F-8443-447E-9D38-4A102685518F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCFB53E0-FE4D-43C8-A732-E95C280C6B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCFB53E0-FE4D-43C8-A732-E95C280C6B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCFB53E0-FE4D-43C8-A732-E95C280C6B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCFB53E0-FE4D-43C8-A732-E95C280C6B0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using LiveCoding.Domain;
 using LiveCoding.Persistence;
 
-namespace LiveCoding.Services;
+namespace LiveCoding.Infra;
 
 public class BarAdapter : IProvideBar
 {

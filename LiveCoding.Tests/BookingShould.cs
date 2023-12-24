@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using LiveCoding.Api.Controllers;
+using LiveCoding.Infra;
 using LiveCoding.Persistence;
 using LiveCoding.Services;
 using NFluent;
