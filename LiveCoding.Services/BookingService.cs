@@ -5,27 +5,26 @@ namespace LiveCoding.Services
 {
     public class BookingService
     {
-        private readonly IDevRepository _devRepo;
         private readonly IBookingRepository _bookingRepository;
         private readonly IProvideBar _provideBar;
+        private readonly IDevAvailabilitiesAdapter _devAvailabilitiesAdapter;
 
         public BookingService(
-            IDevRepository devRepo,
             IBookingRepository bookingRepository,
-            IProvideBar provideBar
-        )
+            IProvideBar provideBar, 
+            IDevAvailabilitiesAdapter devAvailabilitiesAdapter)
         {
-            _devRepo = devRepo;
             _bookingRepository = bookingRepository;
             _provideBar = provideBar;
+            _devAvailabilitiesAdapter = devAvailabilitiesAdapter;
         }
 
         public bool ReserveBar()
         {
-            var devs = _devRepo.Get().ToList();
             var allBars = _provideBar.GetAllBars();
-            var devAvailabilities = GetDevAvailabilities(devs);
-            var bestDate = BestDate.GetBestDate(devAvailabilities, devs.Count);
+            var devAvailabilities = _devAvailabilitiesAdapter.GetDevAvailabilities();
+            var numberOfDevs = _devAvailabilitiesAdapter.GetNumberOfDevs();
+            var bestDate = BestDate.GetBestDate(devAvailabilities, numberOfDevs);
 
             if (bestDate is DevAvailabilityNotFound) return false;
 
@@ -35,18 +34,6 @@ namespace LiveCoding.Services
             _bookingRepository.Save(new BookingData() { Bar = new BarData(bookedBar.Name.Value, bookedBar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
 
             return true;
-        }
-
-        private static List<DevAvailability> GetDevAvailabilities(IEnumerable<DevData> devs)
-        {
-            var devAvailabilities = new List<DevAvailability>();
-            foreach (var date in devs.SelectMany(devData => devData.OnSite))
-            {
-                var devAvailability = devAvailabilities.FirstOrDefault(devAvailability => devAvailability.Day == date);
-                if (devAvailability != null) devAvailability.NumberOfDevs++;
-                else devAvailabilities.Add(new DevAvailability(date, 1));
-            }
-            return devAvailabilities;
         }
     }
 }
