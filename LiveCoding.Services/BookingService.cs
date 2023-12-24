@@ -4,30 +4,25 @@ namespace LiveCoding.Services
 {
     public class BookingService
     {
-        private readonly IBarRepository _barRepo;
         private readonly IDevRepository _devRepo;
-        private readonly IBoatRepository _boatRepo;
         private readonly IBookingRepository _bookingRepository;
+        private readonly IProvideBar _provideBar;
 
-        public BookingService(IBarRepository barRepo,
+        public BookingService(
             IDevRepository devRepo,
-            IBoatRepository boatRepo,
-            IBookingRepository bookingRepository
+            IBookingRepository bookingRepository,
+            IProvideBar provideBar
         )
         {
-            _barRepo = barRepo;
             _devRepo = devRepo;
-            _boatRepo = boatRepo;
             _bookingRepository = bookingRepository;
+            _provideBar = provideBar;
         }
 
         public bool ReserveBar()
         {
-            var bars = _barRepo.Get();
             var devs = _devRepo.Get().ToList();
-            var boats = _boatRepo.Get();
-
-            var allBars = GetAllBars(bars, boats);
+            var allBars = _provideBar.GetAllBars();
             var devAvailabilities = GetDevAvailabilities(devs);
             var bestDate = BestDate.GetBestDate(devAvailabilities, devs.Count);
 
@@ -39,13 +34,6 @@ namespace LiveCoding.Services
             _bookingRepository.Save(new BookingData() { Bar = new BarData(bookedBar.Name.Value, bookedBar.Capacity, Enum.GetValues<DayOfWeek>()), Date = bestDate.Day });
 
             return true;
-        }
-
-        private static IEnumerable<Bar?> GetAllBars(IEnumerable<BarData> bars, IEnumerable<BoatData> boats)
-        {
-            var allBars = bars.Select(bar => new Bar(bar.Capacity, bar.Open, bar.Name, true)).ToList();
-            allBars.AddRange(boats.Select(boat => new Bar(boat.MaxPeople, Enum.GetValues<DayOfWeek>(), boat.Name, false)));
-            return allBars;
         }
 
         private static List<DevAvailability> GetDevAvailabilities(IEnumerable<DevData> devs)

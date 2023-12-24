@@ -148,11 +148,10 @@ namespace LiveCoding.Tests
             BoatData[]? boatData = null)
         {
             var bookingRepository = new FakeBookingRepository();
-            return new BookingController(new BookingService(
-                    new FakeBarRepository(barData),
-                    new FakeDevRepository(devData),
-                    new FakeBoatRepository(boatData ?? Array.Empty<BoatData>()),
-                    bookingRepository),
+            return new BookingController(new BookingService(new FakeDevRepository(devData),
+                    bookingRepository,
+                    new BarAdapter(new FakeBarRepository(barData), new FakeBoatRepository(boatData ?? Array.Empty<BoatData>()))
+                    ),
                 bookingRepository);
         }
 
@@ -161,7 +160,6 @@ namespace LiveCoding.Tests
             Capacity: 10,
             Open: new[] { DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday }
         );
-
 
         private static readonly DateTime Wednesday = new(2022, 05, 11);
         private static readonly DateTime Thursday = Wednesday.AddDays(1);
